@@ -1,0 +1,18 @@
+html 
+    head 
+        title Ocjene
+    body 
+        table 
+            tr 
+                th Test 
+                th Subject 
+                th Grade 
+            tbody 
+                each grade in data 
+                    tr 
+                        td #{grade.test}
+                        td #{grade.subject} 
+                        td #{grade.grade} 
+
+    div 
+        li: a(href='/') Povratak na izbornik

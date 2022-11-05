@@ -1,0 +1,24 @@
+html 
+    head 
+        title Sigurnost 
+
+    body 
+        li: a(href='/') Nesigurne stranice 
+        li: form.grades-form(action="/grades-secure", method="POST")
+                .form-control 
+                    label(for="studentId") StudentId
+                    input(type="number", name="studentId", id="studentId")
+
+                button.btn(type="submit") Dohvati studentove ocjene
+        li: form.grade-form(action="/grade-secure", method="POST")
+                .form-control 
+                    label(for="test") Test 
+                    input(type="text", name="test", id="test")
+                    label(for="subject") Subject 
+                    input(type="text", name="subject", id="subject")
+                    label(for="grade") Grade 
+                    input(type="number", name="grade", id="grade") 
+                    label(for="studentId") StudentId 
+                    input(type="number", name="studentId", id="studentId")
+
+                button.btn(type="submit") Ocijeni studenta  
