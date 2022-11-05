@@ -11,8 +11,10 @@ const client = new Client({
   host: process.env.DB_HOST,
   password: process.env.DB_PASSWORD,
   port: 5432,
-  connectionString: process.env.DB_CONNECTION,
-  ssl: true
+  ssl: {
+    require: true,
+    rejectUnauthorized: false
+  }
 });
 
 const app = express();
