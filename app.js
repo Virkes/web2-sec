@@ -6,12 +6,13 @@ const cors = require('cors');
 const { Client } = require('pg');
 
 const client = new Client({
+  database: process.env.DATABASE,
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
-  database: 'Student_grades',
   password: process.env.DB_PASSWORD,
   port: 5432,
-  connectionString: process.env.DB_CONNECTION
+  connectionString: process.env.DB_CONNECTION,
+  ssl: true
 });
 
 const app = express();
@@ -32,10 +33,22 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-const hostname = '127.0.0.1';
-app.listen(port, hostname, () => {
-  console.log(`Server locally running at http://${hostname}:${port}/`);
-})
+if (externalUrl) {
+  const hostname = '127.0.0.1';
+  app.listen(port, hostname, () => {
+    console.log(`Server locally running at http://${hostname}:${port}/ and from
+    outside on ${externalUrl}`);
+  });
+}
+else {
+  https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+    }, app)
+    .listen(port, function () {
+    console.log(`Server running at https://localhost:${port}/`);
+    });
+}
 
 client
   .connect()
@@ -58,7 +71,7 @@ app.post("/grades-unsecure", (req, res) => {
       if(err) throw err;
       res.render('grades-unsecure', {data: result.rows});
     });
-  } catch (error) {
+  } catch (err) {
     res.send('Something went wrong!');
   }
 });
