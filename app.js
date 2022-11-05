@@ -11,8 +11,7 @@ const client = new Client({
   database: 'Student_grades',
   password: process.env.DB_PASSWORD,
   port: 5432,
-  connectionString: process.env.DB_CONNECTION,
-  ssl: true
+  connectionString: process.env.DB_CONNECTION
 });
 
 const app = express();
